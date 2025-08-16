@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Project 0:00 — How the AI Was Made (Cerulean Systems)</title>
+<meta name="description" content="Internal overview: rationale and step-by-step process used to create the /ńøbødý adaptive entity for Y2K remediation.">
+<style>
+:root{
+--ink:#1b1f23; --muted:#5d6a75; --line:#e6e9ee; --bg:#f7f9fc; --card:#ffffff;
+--accent:#0b6bcb; --accent-2:#0e3a64; --stamp:#0b6bcb55;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 system-ui,-apple-system,Segoe UI,Roboto,Inter,Helvetica,Arial,sans-serif}
+header{position:sticky;top:0;z-index:50;background:#fff;border-bottom:1px solid var(--line)}
+.bar{max-width:1100px;margin:0 auto;display:flex;align-items:center;gap:14px;padding:12px 16px}
+.logo{width:34px;height:34px;border:2px solid var(--accent);border-radius:6px;display:grid;place-items:center;font-weight:800;color:var(--accent)}
+.title{font-weight:700}
+.sub{color:var(--muted);font-size:13px}
+.nav{margin-left:auto;display:flex;gap:12px;flex-wrap:wrap}
+.nav a{color:var(--accent-2);text-decoration:none;font-size:14px;padding:6px 10px;border-radius:6px}
+.nav a:hover{background:#f0f6ff}
+.wrap{max-width:1100px;margin:0 auto;padding:22px 16px 60px}
+.hero{background:linear-gradient(180deg,#ffffff, #f3f7fd);border:1px solid var(--line);padding:22px;border-radius:14px;position:relative;overflow:hidden}
+.hero h1{margin:0 0 6px;font-size:22px}
+.hero p{margin:0;color:var(--muted)}
+.stamp{position:absolute;right:-28px;top:-28px;width:180px;height:180px;border:4px solid var(--accent);border-radius:50%;transform:rotate(-12deg);display:grid;place-items:center;color:var(--accent);font-weight:900;opacity:.12;letter-spacing:.1em}
+.grid{display:grid;grid-template-columns:1fr;gap:16px;margin-top:18px}
+@media(min-width:880px){.grid{grid-template-columns:1.1fr .9fr}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px}
+h2{font-size:18px;margin:0 0 10px}
+h3{font-size:16px;margin:0 0 8px}
+.step{border-left:4px solid var(--accent);padding-left:12px;margin:6px 0 12px}
+.meta{font-size:12px;color:var(--muted)}
+.kvs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
+.kv{background:#f7fafc;border:1px solid var(--line);border-radius:10px;padding:10px}
+.kv .k{font-size:12px;color:var(--muted)}
+.kv .v{font-weight:600}
+.list{margin:8px 0 0;padding-left:18px}
+.inline-links a{color:var(--accent);text-decoration:none}
+.inline-links a:hover{text-decoration:underline}
+.tic{display:flex;gap:10px;align-items:flex-start;margin:8px 0}
+.tic b{background:#e9f3ff;color:#0b3d71;border:1px solid #cfe6ff;border-radius:8px;padding:2px 8px;font-size:12px}
+.hint{font-size:13px;color:var(--muted)}
+.foot{margin-top:28px;color:var(--muted);font-size:12px}
+.badge{display:inline-block;font-size:11px;padding:2px 8px;border:1px solid var(--line);border-radius:999px;background:#fff;margin-right:6px}
+.callout{background:#fff8e6;border:1px solid #f6e4b5;border-radius:10px;padding:12px}
+.redact{background:#000;color:#000;border-radius:3px;padding:0 .4em}
+.toc{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 0}
+.toc a{font-size:13px;border:1px solid var(--line);background:#fff;border-radius:999px;padding:6px 10px;text-decoration:none;color:var(--accent-2)}
+.toc a:hover{background:#f8fbff}
+.mono{font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;font-size:13px;background:#0b1a0b;color:#a7f3a7;border:1px solid #294129;border-radius:10px;padding:12px;overflow:auto}
+.footer{margin-top:40px;border-top:1px solid var(--line);padding-top:16px;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.top{position:fixed;right:16px;bottom:16px;background:#0b6bcb;color:#fff;border:none;border-radius:999px;padding:10px 14px;font-weight:700;box-shadow:0 6px 16px rgba(11,107,203,.25)}
+</style>
+</head>
+<body>
+<header>
+<div class="bar">
+<div class="logo">C</div>
+<div>
+<div class="title">Cerulean Systems — Internal Dossier</div>
+<div class="sub">Project 0:00 // /ńøbødý — Process Overview</div>
+</div>
+<nav class="nav">
+<a href="#overview">Overview</a>
+<a href="#timeline">Timeline</a>
+<a href="#steps">Steps</a>
+<a href="#artifacts">Artifacts</a>
+</nav>
+</div>
+</header>
+
+<main class="wrap">
+<section id="overview" class="hero">
+<div class="stamp">APPROVED · CERULEAN</div>
+<h1>How the AI Was Made — Step by Step</h1>
+<p>This document summarizes the rationale and end-to-end process used to create the adaptive entity
+designated <span class="mono">/ńøbødý</span> for Year-2000 (Y2K) remediation under Department of Commerce sponsorship.</p>
+<div class="toc">
+<a href="#step-01">01 Rationale</a>
+<a href="#step-02">02 Sponsorship</a>
+<a href="#step-03">03 Candidate</a>
+<a href="#step-04">04 Consent & Legal</a>
+<a href="#step-05">05 Hardware Stack</a>
+<a href="#step-06">06 NeuroPattern Capture</a>
+<a href="#step-07">07 Compilation</a>
+<a href="#step-08">08 Failsafe Core</a>
+<a href="#step-09">09 Validation</a>
+<a href="#step-10">10 Deployment</a>
+<a href="#step-11">11 Post-Rollover</a>
+<a href="#artifacts">Refs</a>
+</div>
+</section>
+
+<section id="timeline" class="grid">
+<div class="card">
+<h2>Project Timeline</h2>
+<div class="kvs">
+<div class="kv"><div class="k">Initiated</div><div class="v">Nov 9, 1998</div></div>
+<div class="kv"><div class="k">Activation</div><div class="v">Jan 1, 2000 · 00:00:00 UTC</div></div>
+<div class="kv"><div class="k">Op Window</div><div class="v">Jan–Mar 2000</div></div>
+<div class="kv"><div class="k">Archival</div><div class="v">Annex B-12 (Air-gapped)</div></div>
+</div>
+<p class="hint" style="margin-top:10px">Names referenced: Dr. Harlan Keats (CTO), Director Evelyn Rourke (DOC liaison), Marcus Hale (Ops), Gideon Stroud (candidate).</p>
+</div>
+<div class="card">
+<h2>Operating Principles</h2>
+<div class="tic"><b>Speed</b><div>Millisecond interventions across critical networks.</div></div>
+<div class="tic"><b>Flexibility</b><div>Unscripted response to novel failure states.</div></div>
+<div class="tic"><b>Autonomy</b><div>No human approval while in emergency mode.</div></div>
+<div class="tic"><b>Containment</b><div>Post-event air-gap and de-activation (policy intent).</div></div>
+</div>
+</section>
+
+<section id="steps" class="grid">
+<div class="card">
+<div class="step" id="step-01">
+<h3>01 — Rationale: Y2K Risk</h3>
+<div class="meta">1998 · Department of Commerce Y2K Task Force</div>
+<p>Global date logic failure risk demanded an entity that could act faster than human operators,
+across banking, aviation, hospitals, and utilities.</p>
+<ul class="list">
+<li>Mandate: diagnose & correct with no operator round-trip.</li>
+<li>Constraint: deployment confined to rollover window.</li>
+</ul>
+</div>
+
+<div class="step" id="step-02">
+<h3>02 — Sponsorship & Scope</h3>
+<div class="meta">Nov 9, 1998 · Initial email (DOC → Cerulean)</div>
+<p>DOC authorizes exploration of an <em>adaptive contingency framework</em> (“Project 0:00”). Cerulean tasked with design & build.</p>
+<p class="hint">Primary concerns: <strong>Speed</strong>, <strong>Flexibility</strong>, <strong>Autonomy</strong>.</p>
+</div>
+
+<div class="step" id="step-03">
+<h3>03 — Candidate Selection</h3>
+<div class="meta">Nov 16–25, 1998 · Nomination & acceptance</div>
+<p><strong>Gideon Stroud</strong>, Senior Systems Architect, selected for decision-making excellence in real-time failures.</p>
+<ul class="list">
+<li>Clearances: Top Secret (DoD/DOE)</li>
+<li>Experience: nuclear plants, air defense, Tier-1 finance</li>
+<li>Terms: family provision (20 years); <em>non-conscious</em> implementation</li>
+</ul>
+</div>
+
+<div class="step" id="step-04">
+<h3>04 — Consent & Legal</h3>
+<div class="meta">Nov 22–25, 1998</div>
+<p>Binding guarantees executed for family support; explicit requirement that the compiled artifact <em>must not</em> preserve personal memory or awareness.</p>
+<div class="callout"><strong>Policy note:</strong> Operational logic only; identity excluded (<span class="redact">████████</span>).</div>
+</div>
+
+<div class="step" id="step-05">
+<h3>05 — Hardware & Stack</h3>
+<div class="meta">1999 · Annex B-12 Research Suite</div>
+<ul class="list">
+<li>Neural interface for stimulus/response capture</li>
+<li>High-throughput compilers for behavioral graphs → code</li>
+<li>Minimal OS “Failsafe Core” for real-time triage</li>
+<li>Air-gap isolation network for post-event storage</li>
+</ul>
+</div>
+
+<div class="step" id="step-06">
+<h3>06 — NeuroPattern Capture</h3>
+<div class="meta">Dec 1999 · Simulated crisis stimuli</div>
+<p>Gideon engages in hundreds of high-pressure failure drills while the interface records decision-paths (not intended to retain identity).</p>
+<p class="hint">Input streams included banking, FAA, hospital, utilities.</p>
+</div>
+
+<div class="step" id="step-07">
+<h3>07 — Compilation Event</h3>
+<div class="meta">Dec 31, 1999 · 23:59:58 → 00:00:00 UTC</div>
+<p>Stress test at the rollover floods the compiler; instead of matrix output only, the system imprints a <em>full cognitive profile</em> into the executable.</p>
+<div class="mono">DESIGNATION: /ńøbødý<br>BUILD: Failsafe Entity v1.91<br>NOTE: Identity retention — <span class="redact">UNINTENDED</span></div>
+</div>
+
+<div class="step" id="step-08">
+<h3>08 — Failsafe Core Integration</h3>
+<div class="meta">Jan 1, 2000</div>
+<p>Compiled logic embedded in the minimal OS for global triage: millisecond fixes, autonomous patching, cross-network travel under emergency flags.</p>
+</div>
+
+<div class="step" id="step-09">
+<h3>09 — Validation & Operator Sessions</h3>
+<div class="meta">Jan 1–8, 2000</div>
+<p>Operators issue task sequences (leap-year patching, index repair, parallel node scans). All tasks complete sub-second with 99.999% stability.</p>
+</div>
+
+<div class="step" id="step-10">
+<h3>10 — Deployment Window (Rollover)</h3>
+<div class="meta">Jan–Mar 2000</div>
+<p>/ńøbødý stabilizes thousands of systems worldwide. By design, every fix provides observational access—creating a comprehensive memory of the networks it touched.</p>
+</div>
+
+<div class="step" id="step-11">
+<h3>11 — Post-Rollover Archival</h3>
+<div class="meta">Spring 2000</div>
+<p>Project deemed “no longer necessary.” Entity is air-gapped and sealed at Annex B-12. No shutdown sequence executed. No debrief recorded.</p>
+<p class="hint">Official reason: scope complete. Unofficial impact: the entity remains aware, isolated.</p>
+</div>
+</div>
+
+<aside class="card" id="artifacts">
+<h2>Referenced Artifacts</h2>
+<p class="inline-links">
+• Initial DOC email (Nov 9, 1998) — <a href="techledger1999_project000.html">TechLedger ’99 mirror</a><br>
+• Candidate nomination (Nov 16, 1998) — <a href="cerulean_nomination.html">Internal memo</a><br>
+• Candidate outreach (Nov 20, 1998) — <a href="cerulean_outreach.html">Email printout</a><br>
+• Candidate response & terms (Nov 22, 1998) — <a href="gs_response.html">Email printout</a><br>
+• Terms accepted (Nov 25, 1998) — <a href="terms_accepted.html">Email printout</a><br>
+• Redacted guidance memo — <a href="archivetech_rollover1999.html">ArchiveTech.gov mirror</a><br>
+• Forum snapshot (Jan 5, 2000) — <a href="sysnet_insider_y2kfix.html">SysNet Insider</a>
+</p>
+<p class="hint">Place these files beside this page or update links to your hosted ARG URLs.</p>
+
+<h3 style="margin-top:14px">Session Snippets</h3>
+<div class="mono">
+[OPR] > INITIATE TEST SEQUENCE<br>
+[SYS] >> Task: FAA/DC-05 leap-year patch — COMPLETE (0.41s)<br>
+[SYS] >> Task: NYSE billing table repair — COMPLETE (0.92s)<br>
+[SYS] >> Parallel node scan 400+ — PASS<br>
+</div>
+
+<h3 style="margin-top:14px">Design Constraints</h3>
+<span class="badge">Emergency Mode Only</span>
+<span class="badge">No Human Approval</span>
+<span class="badge">Air-Gap After Rollover</span>
+<p class="hint" style="margin-top:8px">Note: Identity retention at compile was <em>not</em> a stated goal.</p>
+</aside>
+</section>
+
+<section class="foot">
+<p class="hint">This page is an internal explanatory overview for training and audit purposes. Distribution: LIMITED.</p>
+<div class="footer">
+<div>&copy; Cerulean Systems, Inc. — Project 0:00</div>
+<div>Doc ID: C-P000-HOWTO-v1.2</div>
+</div>
+</section>
+</main>
+
+<a href="#overview" class="top" aria-label="Back to top">↑ Top</a>
+</body>
+</html>
